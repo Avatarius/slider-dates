@@ -1,0 +1,9 @@
+.container {
+  inline-size: var(--circle-size, 530px);
+  block-size: var(--circle-size, 530px);
+  border: 1px solid rgba(66, 86, 122, 0.5);
+  border-radius: 100%;
+  position: absolute;
+  inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
+  inset-block-end: calc(50% - 206px);
+}

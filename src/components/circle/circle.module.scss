@@ -1,3 +1,5 @@
+@import '../../styles/mixins/button.scss';
+
 .container {
   inline-size: var(--circle-size, 530px);
   block-size: var(--circle-size, 530px);
@@ -6,4 +8,12 @@
   position: absolute;
   inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
   inset-block-end: calc(50% - 206px);
+}
+
+
+.button {
+  @include button(56px, #303e5880);
+  position: absolute;
+  inset-inline-end: calc(50% );
+  inset-block-end: 50%;
 }

@@ -1,9 +1,29 @@
 .container {
   margin-inline: 320px 160px;
   padding: 167px 0 0 80px;
-  min-block-size: 100dvh;
   border-inline: 1px solid var(--main-border-color, rgba(66, 86, 122, 0.1));
   position: relative;
+}
+
+.container::before, .container::after {
+  content: '';
+  border: 1px solid rgba(66, 86, 122, .1);
+  position: absolute;
+}
+
+.container::before {
+  inline-size: 100%;
+  block-size: 1px;
+  inset-inline-end: 0;
+  inset-block-start: 480px;
+
+}
+
+.container::after {
+  inline-size: 1px;
+  block-size: 100%;
+  inset-inline-start: 50%;
+  inset-block-start: 0;
 }
 
 
@@ -24,3 +44,5 @@
     margin-block-start: 23px;
   }
 }
+
+

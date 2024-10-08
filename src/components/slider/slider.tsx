@@ -1,11 +1,13 @@
 import { ArrowButton } from "../arrowButton/arrowButton";
 import { Circle } from "../circle/circle";
 import styles from "./slider.module.scss";
+import { historicalData } from "../../utils/constants";
+import clsx from "clsx";
 
 function Slider() {
   return (
     <section className={styles.container}>
-      <Circle/>
+      {/* <Circle data={historicalData}/> */}
       <h1 className={styles.title}>Исторические даты</h1>
       <div className={styles.controls}>
         <p className={styles.controls__slide}>06/06</p>

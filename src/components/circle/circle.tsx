@@ -1,33 +1,17 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, forwardRef, SetStateAction, useEffect, useRef, useState } from "react";
 import { IHistoricalData } from "../../utils/types";
 import styles from "./circle.module.scss";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+
 
 interface ICircleProps {
   data: IHistoricalData[];
   currentSlide: number;
-  setCurrentSlide: Dispatch<SetStateAction<number>>;
+  size: number;
+  onClick: (index: number) => void;
 }
 
-function Circle({ data, currentSlide, setCurrentSlide }: ICircleProps) {
-  const [circleWidth, setCircleWidth] = useState(0);
-  useEffect(() => {
-    if (circleRef.current?.offsetWidth) {
-      setCircleWidth(circleRef.current.getBoundingClientRect().width);
-    }
-  }, []);
-
-
-  function calculatePos(index: number) {
-    const step = (2 * Math.PI) / data.length;
-    const angle = step * (index * -1 - 1 + currentSlide);
-    const x = (circleWidth / 2) * Math.cos(angle);
-    const y = (circleWidth / 2) * Math.sin(angle);
-    return { x: x, y: y };
-  }
-
-  const circleRef = useRef<HTMLDivElement>(null);
+const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
+  const { data, currentSlide, size, onClick } = props;
   const dataArray: IHistoricalData[] =
     data.length >= 6 ? data.slice(0, 6) : data;
   const buttonsArray = dataArray.map((item, index) => {
@@ -37,18 +21,37 @@ function Circle({ data, currentSlide, setCurrentSlide }: ICircleProps) {
         key={item.id}
         className={styles.button}
         style={{ translate: `${x}px ${y}px` }}
-        onClick={() => setCurrentSlide(index)}
+        // onClick={() => setCurrentSlide(index)}
+        onClick={() => onClick(index + 1)}
+        data-circle-button
       >
         {index + 1}
       </button>
     );
   });
 
+
+  /* function calculatePos(index: number) {
+    const step = (2 * Math.PI) / data.length;
+    const angle = step * (index * -1 - 1 + currentSlide);
+    const x = (size / 2) * Math.cos(angle);
+    const y = (size / 2) * Math.sin(angle);
+    return { x: x, y: y };
+  } */
+  function calculatePos(index: number) {
+    const step = (2 * Math.PI) / data.length;
+    const angle = step * index;
+    const x = (size / 2) * Math.cos(angle);
+    const y = (size / 2) * Math.sin(angle);
+    return {x, y};
+  }
+
+
   return (
-    <div className={styles.container} ref={circleRef}>
+    <div className={styles.container} ref={ref}>
       {buttonsArray}
     </div>
   );
-}
+});
 
 export { Circle };

@@ -3,11 +3,15 @@ import clsx from 'clsx';
 
 interface IArrowButtonProps {
   side: boolean; // false - лево, true - право
+  onClick?: () => void;
 }
 
-function ArrowButton({ side }: IArrowButtonProps) {
+function ArrowButton({ side, onClick }: IArrowButtonProps) {
+  function handleClick() {
+    onClick && onClick();
+  }
   return (
-    <button className={clsx(styles.button, side && styles.button_reversed)}/>
+    <button className={clsx(styles.button, side && styles.button_reversed)} onClick={handleClick}/>
   );
 }
 export { ArrowButton };

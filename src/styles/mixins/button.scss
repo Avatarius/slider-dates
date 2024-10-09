@@ -1,9 +1,10 @@
 @mixin button($size, $borderColor) {
+  border: 1px solid $borderColor;
   border-radius: 100%;
+  font-size: 20px;
   background-color: transparent;
   cursor: pointer;
   appearance: none;
   inline-size: $size;
   block-size: $size;
-  border: 1px solid $borderColor;
 }

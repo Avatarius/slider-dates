@@ -20,3 +20,11 @@
   inset-block-end: calc(50% - (var(--circle-button-size, 56px) / 2));
   background-color: var(--main-background-color, #f4f5f9);
 }
+
+
+.button__title {
+  position: absolute;
+  inset-inline-start: 75px;
+  inset-block-start: calc(50% - 16px);
+  font-weight: 700;
+}

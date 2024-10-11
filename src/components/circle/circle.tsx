@@ -43,6 +43,7 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
         data-circle-button
       >
         {index + 1}
+        <h2 className={styles.button__title} data-circle-button-title>{data[index].title}</h2>
       </button>
     );
   });

@@ -3,6 +3,8 @@
 .container {
   margin-block-start: 56px;
   position: relative;
+  min-block-size: 165px;
+  padding-inline: 80px 160px;
 }
 
 .button {

@@ -8,7 +8,7 @@ interface IEventCardProps {
 function EventCard({year, description} : IEventCardProps) {
   return (
     <article className={styles.container}>
-      <h2 className={styles.year}>{year}</h2>
+      <h3 className={styles.year}>{year}</h3>
       <p className={styles.description}>{description}</p>
     </article>
   )

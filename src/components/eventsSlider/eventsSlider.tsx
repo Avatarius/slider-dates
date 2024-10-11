@@ -18,21 +18,27 @@ function EventsSlider({ events }: IEventsSlider) {
   const buttonLeftRef = useRef<HTMLButtonElement>(null);
   const buttonRightRef = useRef<HTMLButtonElement>(null);
 
-
   return (
-    <div  className={styles.container}>
+    <div className={styles.container}>
       <ArrowButton
-          side={false}
-          additionalClasses={clsx(styles.button, styles.button_left)}
-          ref={buttonLeftRef}
-        />
-        <ArrowButton
-          side={true}
-          additionalClasses={clsx(styles.button, styles.button_right)}
-          ref={buttonRightRef}
-        />
-      <Swiper modules={[Navigation]} slidesPerView={3} navigation={{prevEl: buttonLeftRef.current, nextEl: buttonRightRef.current}}>
-
+        side={false}
+        additionalClasses={clsx(styles.button, styles.button_left)}
+        ref={buttonLeftRef}
+      />
+      <ArrowButton
+        side={true}
+        additionalClasses={clsx(styles.button, styles.button_right)}
+        ref={buttonRightRef}
+      />
+      <Swiper
+        modules={[Navigation]}
+        spaceBetween={80}
+        slidesPerView={3}
+        navigation={{
+          prevEl: buttonLeftRef.current,
+          nextEl: buttonRightRef.current,
+        }}
+      >
         {events.map((event) => (
           <SwiperSlide>
             <EventCard year={event.year} description={event.description} />

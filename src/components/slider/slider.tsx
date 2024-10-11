@@ -2,14 +2,12 @@ import { ArrowButton } from "../arrowButton/arrowButton";
 import { Circle } from "../circle/circle";
 import styles from "./slider.module.scss";
 import { historicalData } from "../../utils/constants";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { IHistoricalData } from "../../utils/types";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
-  const [sliderData, setSliderData] = useState<IHistoricalData>(historicalData[currentSlide]);
   const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
   const deg = -360 / historicalData.length;
@@ -81,6 +79,10 @@ function Slider() {
     return result;
   }
 
+  function padNumber(num: number) {
+    return String(num).padStart(2, '0');
+  }
+
   return (
     <section className={styles.container}>
       <Circle
@@ -93,7 +95,7 @@ function Slider() {
       />
       <h1 className={styles.title}>Исторические даты</h1>
       <div className={styles.controls}>
-        <p className={styles.controls__slide}>06/06</p>
+        <p className={styles.controls__slide}>{padNumber(currentSlide)}/{padNumber(historicalData.length)}</p>
         <div className={styles["controls__button-container"]}>
           <ArrowButton
             side={false}

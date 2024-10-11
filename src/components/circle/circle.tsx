@@ -57,7 +57,7 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
 
   return (
     <div className={styles.container}>
-      <AnimatedYear startYear={data[currentSlide - 1].startYear} endYear={2022}/>
+      <AnimatedYear startYear={data[currentSlide - 1].startYear} endYear={data[currentSlide - 1].endYear}/>
       <div className={styles.circle} ref={ref}>
         {buttonsArray}
       </div>

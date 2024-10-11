@@ -1,13 +1,16 @@
 @import "../../styles/mixins/button.scss";
 
 .container {
-  inline-size: var(--circle-size, 530px);
-  block-size: var(--circle-size, 530px);
-  border: 1px solid rgba(66, 86, 122, 0.5);
-  border-radius: 100%;
   position: absolute;
   inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
   inset-block-start: 215px;
+}
+
+.circle {
+  inline-size: var(--circle-size, 530px);
+  block-size: var(--circle-size, 530px);
+  border-radius: 100%;
+  border: 1px solid rgba(66, 86, 122, 0.5);
 }
 
 .button {

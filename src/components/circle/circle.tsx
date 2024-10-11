@@ -1,6 +1,7 @@
 import { Dispatch, forwardRef, SetStateAction } from "react";
 import { IHistoricalData } from "../../utils/types";
 import styles from "./circle.module.scss";
+import { AnimatedYear } from "../animatedYear/animatedYear";
 
 interface ICircleProps {
   data: IHistoricalData[];
@@ -55,8 +56,11 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
   }
 
   return (
-    <div className={styles.container} ref={ref}>
-      {buttonsArray}
+    <div className={styles.container}>
+      <AnimatedYear startYear={data[currentSlide - 1].startYear} endYear={2022}/>
+      <div className={styles.circle} ref={ref}>
+        {buttonsArray}
+      </div>
     </div>
   );
 });

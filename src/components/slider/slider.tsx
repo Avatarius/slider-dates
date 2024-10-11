@@ -5,9 +5,11 @@ import { historicalData } from "../../utils/constants";
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { IHistoricalData } from "../../utils/types";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
+  const [sliderData, setSliderData] = useState<IHistoricalData>(historicalData[currentSlide]);
   const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
   const deg = -360 / historicalData.length;
@@ -72,7 +74,7 @@ function Slider() {
   function getNewSlideValue(index: number) {
     let result = index;
     if (index > historicalData.length) {
-      result = 0;
+      result = 1;
     } else if (index <= 0) {
       result = historicalData.length;
     }

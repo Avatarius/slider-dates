@@ -2,29 +2,30 @@ import {
   Dispatch,
   forwardRef,
   SetStateAction,
-  useEffect,
-  useRef,
-  useState,
 } from "react";
 import { IHistoricalData } from "../../utils/types";
 import styles from "./circle.module.scss";
+
 
 interface ICircleProps {
   data: IHistoricalData[];
   currentSlide: number;
   setCurrentSlide: Dispatch<SetStateAction<number>>;
+  animateButton: (selector: HTMLElement, increase: boolean) => void;
   size: number;
-  onClick: (index: number) => void;
+
 }
 
 const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
-  const { data, currentSlide, setCurrentSlide, size, onClick } = props;
+  const { data, currentSlide, setCurrentSlide, size, animateButton } = props;
   const dataArray: IHistoricalData[] =
     data.length >= 6 ? data.slice(0, 6) : data;
   function handleClick(index: number) {
     const buttonIndex = index + 1;
     setCurrentSlide(buttonIndex);
   }
+
+
   const buttonsArray = dataArray.map((item, index) => {
     const { x, y } = calculatePos(index);
     return (
@@ -33,6 +34,19 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
         className={styles.button}
         style={{ translate: `${x}px ${y}px` }}
         onClick={() => handleClick(index)}
+        onMouseEnter={({target}) => {
+          if (currentSlide === index + 1) {
+            return;
+          }
+          animateButton(target as HTMLElement, true);
+
+        }}
+        onMouseLeave={({target}) => {
+          if (currentSlide === index + 1) {
+            return;
+          }
+          animateButton(target as HTMLElement, false)
+        }}
         data-circle-button
       >
         {index + 1}

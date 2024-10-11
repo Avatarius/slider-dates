@@ -13,25 +13,54 @@ function Slider() {
   const timelineRef = useRef<GSAPTimeline | null>(null);
   const deg = -360 / historicalData.length;
 
-  useEffect(() => {
-  }, [currentSlide])
   useLayoutEffect(() => {
     if (circleRef.current) {
       setCircleWidth(circleRef.current.getBoundingClientRect().width);
     }
   }, []);
 
-  useGSAP(() => {
-    const rotationValue = deg * currentSlide;
-    timelineRef.current = gsap.timeline().set(circleRef.current, {rotation: rotationValue}).set('[data-circle-button]', {rotation: -rotationValue});
-  }, {scope: circleRef});
+  useGSAP(
+    () => {
+      const rotationValue = deg * currentSlide;
+      timelineRef.current = gsap
+        .timeline()
+        .set(circleRef.current, { rotation: rotationValue })
+        .set("[data-circle-button]", { rotation: -rotationValue })
+        .set("[data-circle-button]", {scale: 0.1, backgroundColor: '#000'})
+        .set(`[data-circle-button]:nth-child(${currentSlide})`, {scale: 1, backgroundColor: '#f4f5f9'})
 
+    },
+    { scope: circleRef }
+  );
 
-  useGSAP(() => {
-     const rotationValue = currentSlide * deg;
-     const duration = 1;
-    timelineRef.current?.to(circleRef.current, {rotation: `${rotationValue}_short`, duration: duration}).to('[data-circle-button]', {rotation: `${-rotationValue}_short`, duration: duration}, '<')
-  }, {scope: circleRef, dependencies: [currentSlide]})
+  useGSAP(
+    () => {
+      const rotationValue = currentSlide * deg;
+      const duration = 1;
+      timelineRef.current
+        ?.to(circleRef.current, {
+          rotation: `${rotationValue}_short`,
+          duration: duration,
+        })
+        .to(
+          "[data-circle-button]",
+          { rotation: `${-rotationValue}_short`, duration: duration },
+          "<"
+        )
+        .to(`[data-circle-button]:not(:nth-child(${currentSlide}))`, {scale: 0.1, backgroundColor: '#000'}, '<')
+        .to(`[data-circle-button]:nth-child(${currentSlide})`, {scale: 1, backgroundColor: '#f4f5f9', duration: duration}, '<')
+    },
+    { scope: circleRef, dependencies: [currentSlide] }
+  );
+
+  function animateButton(selector: HTMLElement, increase: boolean) {
+    if (increase) {
+      gsap.to(selector, {scale: 1, backgroundColor: '#f4f5f9'});
+    } else {
+      gsap.to(selector, {scale: 0.1, backgroundColor: '#000'});
+    }
+  }
+
 
   function getNewSlideValue(index: number) {
     let result = index;
@@ -43,7 +72,6 @@ function Slider() {
     return result;
   }
 
-
   return (
     <section className={styles.container}>
       <Circle
@@ -51,7 +79,7 @@ function Slider() {
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
         size={circleWidth}
-        onClick={() => {}}
+        animateButton={animateButton}
         ref={circleRef}
       />
       <h1 className={styles.title}>Исторические даты</h1>
@@ -60,12 +88,15 @@ function Slider() {
         <div className={styles["controls__button-container"]}>
           <ArrowButton
             side={false}
-            // onClick={() => setCurrentSlide((prev) => prev - 1)}
-            onClick={() => setCurrentSlide(prev => getNewSlideValue(prev - 1))}
+            onClick={() =>
+              setCurrentSlide((prev) => getNewSlideValue(prev - 1))
+            }
           />
           <ArrowButton
             side={true}
-            onClick={() => setCurrentSlide(prev => getNewSlideValue(prev + 1))}
+            onClick={() =>
+              setCurrentSlide((prev) => getNewSlideValue(prev + 1))
+            }
           />
         </div>
       </div>

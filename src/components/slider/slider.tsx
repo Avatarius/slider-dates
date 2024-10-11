@@ -10,74 +10,48 @@ function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
-  const circleRotateAnim = useRef<GSAPAnimation | null>(null);
-  const buttonsRotateAnim = useRef<GSAPAnimation | null>(null);
-  const deg = 360 / historicalData.length;
+  const timelineRef = useRef<GSAPTimeline | null>(null);
+  const deg = -360 / historicalData.length;
+
+  useEffect(() => {
+  }, [currentSlide])
   useLayoutEffect(() => {
     if (circleRef.current) {
       setCircleWidth(circleRef.current.getBoundingClientRect().width);
     }
   }, []);
 
-  /*   useGSAP(
-    () => {
-      const deg = currentSlide === 0 ? 0 : 360 / historicalData.length;
-      if (
-        circleRotateAnim.current?.isActive() ||
-        buttonsRotateAnim.current?.isActive()
-      )
-        return;
-      circleRotateAnim.current = gsap.to(circleRef.current, {
-        rotation: `+=${deg}`,
-      });
-      buttonsRotateAnim.current = gsap.set("[data-circle-button]", {
-        rotation: `+=${-deg}`,
-        duration: 0.3,
-      });
-    },
-    { dependencies: [currentSlide], scope: circleRef }
-  ); */
+  useGSAP(() => {
+    const rotationValue = deg * currentSlide;
+    timelineRef.current = gsap.timeline().set(circleRef.current, {rotation: rotationValue}).set('[data-circle-button]', {rotation: -rotationValue});
+  }, {scope: circleRef});
 
-  const { contextSafe } = useGSAP(
-    () => {
-      gsap.set(circleRef.current, { rotation: deg * -1 });
-      gsap.set("[data-circle-button]", { rotation: deg });
-    },
-    { scope: circleRef }
-  );
 
-  const handleRotation = contextSafe((index: number) => {
-    const difference = index - currentSlide;
-    const sign = difference > 0 ? '+' : '-';
-    // console.log(index, currentSlide);
+  useGSAP(() => {
+     const rotationValue = currentSlide * deg;
+     const duration = 1;
+    timelineRef.current?.to(circleRef.current, {rotation: `${rotationValue}_short`, duration: duration}).to('[data-circle-button]', {rotation: `${-rotationValue}_short`, duration: duration}, '<')
+  }, {scope: circleRef, dependencies: [currentSlide]})
 
-    console.log(index);
+  function getNewSlideValue(index: number) {
+    let result = index;
+    if (index > historicalData.length) {
+      result = 0;
+    } else if (index <= 0) {
+      result = historicalData.length;
+    }
+    return result;
+  }
 
-    setCurrentSlide(index);
-    const duration = 1;
-    if (
-      circleRotateAnim.current?.isActive() ||
-      buttonsRotateAnim.current?.isActive()
-    )
-      return;
-
-    circleRotateAnim.current = gsap.to(circleRef.current, {
-      rotation: `${sign}=${deg}`,
-      duration: duration
-    });
-    buttonsRotateAnim.current = gsap.to("[data-circle-button]", {
-      rotation: `${sign}=${-deg}`,
-      duration: duration,
-    });
-  });
 
   return (
     <section className={styles.container}>
       <Circle
         data={historicalData}
         currentSlide={currentSlide}
+        setCurrentSlide={setCurrentSlide}
         size={circleWidth}
-        onClick={handleRotation}
+        onClick={() => {}}
         ref={circleRef}
       />
       <h1 className={styles.title}>Исторические даты</h1>
@@ -87,11 +61,11 @@ function Slider() {
           <ArrowButton
             side={false}
             // onClick={() => setCurrentSlide((prev) => prev - 1)}
-            onClick={() => handleRotation(currentSlide + 1)}
+            onClick={() => setCurrentSlide(prev => getNewSlideValue(prev - 1))}
           />
           <ArrowButton
             side={true}
-            onClick={() => handleRotation(currentSlide - 1)}
+            onClick={() => setCurrentSlide(prev => getNewSlideValue(prev + 1))}
           />
         </div>
       </div>

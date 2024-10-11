@@ -1,11 +1,6 @@
-import {
-  Dispatch,
-  forwardRef,
-  SetStateAction,
-} from "react";
+import { Dispatch, forwardRef, SetStateAction } from "react";
 import { IHistoricalData } from "../../utils/types";
 import styles from "./circle.module.scss";
-
 
 interface ICircleProps {
   data: IHistoricalData[];
@@ -13,7 +8,6 @@ interface ICircleProps {
   setCurrentSlide: Dispatch<SetStateAction<number>>;
   animateButton: (selector: HTMLElement, increase: boolean) => void;
   size: number;
-
 }
 
 const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
@@ -25,7 +19,6 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
     setCurrentSlide(buttonIndex);
   }
 
-
   const buttonsArray = dataArray.map((item, index) => {
     const { x, y } = calculatePos(index);
     return (
@@ -34,18 +27,17 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
         className={styles.button}
         style={{ translate: `${x}px ${y}px` }}
         onClick={() => handleClick(index)}
-        onMouseEnter={({target}) => {
+        onMouseEnter={({ target }) => {
           if (currentSlide === index + 1) {
             return;
           }
           animateButton(target as HTMLElement, true);
-
         }}
-        onMouseLeave={({target}) => {
+        onMouseLeave={({ target }) => {
           if (currentSlide === index + 1) {
             return;
           }
-          animateButton(target as HTMLElement, false)
+          animateButton(target as HTMLElement, false);
         }}
         data-circle-button
       >

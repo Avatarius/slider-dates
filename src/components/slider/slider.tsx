@@ -5,6 +5,7 @@ import { historicalData } from "../../utils/constants";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { EventsSlider } from "../eventsSlider/eventsSlider";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -111,6 +112,7 @@ function Slider() {
           />
         </div>
       </div>
+      <EventsSlider events={historicalData[currentSlide - 1].events}/>
     </section>
   );
 }

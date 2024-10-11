@@ -12,4 +12,4 @@ interface IHistoricalData {
 }
 
 
-export type {IHistoricalData};
+export type {IHistoricalData, IYearsEvents};

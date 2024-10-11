@@ -1,0 +1,24 @@
+@import '../../styles/mixins/button.scss';
+
+.container {
+  margin-block-start: 56px;
+  position: relative;
+}
+
+.button {
+  inline-size: 40px;
+  block-size: 40px;
+  border: none;
+  box-shadow: 0px 0px 15px 0px #3877EE1A;
+  position: absolute;
+  inset-block-end: 84px;
+  z-index: 12;
+}
+
+.button_left {
+  inset-inline-end: calc(100% + 20px);
+}
+
+.button_right {
+  inset-inline-end: 39px;
+}

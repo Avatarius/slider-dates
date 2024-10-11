@@ -1,0 +1,20 @@
+.container {
+  // max-inline-size: 400px;
+}
+
+.year {
+  margin-block-end: 15px;
+  color: #3877ee;
+  font-family: var(--second-font-family, monospace);
+  font-size: 25px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.description {
+  color: #42567a;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.5;
+  max-inline-size: 400px;
+}

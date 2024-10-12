@@ -20,6 +20,11 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
     setCurrentSlide(buttonIndex);
   }
 
+  function handleHover(index: number) {
+    if (currentSlide === index + 1) return;
+    animateButton(index);
+  }
+
   const buttonsArray = dataArray.map((item, index) => {
     const { x, y } = calculatePos(index);
     return (
@@ -28,19 +33,11 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
         className={styles.button}
         style={{ translate: `${x}px ${y}px` }}
         onClick={() => handleClick(index)}
-        onMouseEnter={({ target }) => {
-          if (currentSlide === index + 1) {
-            return;
-          }
-          // animateButton(target as HTMLElement, true);
-          animateButton(index);
+        onMouseEnter={() => {
+          handleHover(index)
         }}
-        onMouseLeave={({ target }) => {
-          if (currentSlide === index + 1) {
-            return;
-          }
-          // animateButton(target as HTMLElement, false);
-          animateButton(-1);
+        onMouseLeave={() => {
+          handleHover(-1)
         }}
         data-circle-button
       >

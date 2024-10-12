@@ -22,8 +22,13 @@ function Slider() {
   useGSAP(
     () => {
       const rotationValue = deg * currentSlide;
-      const buttons: HTMLElement[] = gsap.utils.toArray('[data-circle-button]', circleRef.current);
+      const buttons: HTMLElement[] = gsap.utils.toArray(
+        "[data-circle-button]",
+        circleRef.current
+      );
       gsap.set(circleRef.current, { rotation: rotationValue });
+      console.log("set");
+
       buttons.forEach((btn, index) => {
         const selector = gsap.utils.selector(btn);
         gsap.set(btn, { rotation: -rotationValue });
@@ -32,10 +37,10 @@ function Slider() {
             scale: 1,
             backgroundColor: "#f4f5f9",
           });
-          gsap.set(selector('[data-circle-button-title]'), {opacity: 1});
+          gsap.set(selector("[data-circle-button-title]"), { opacity: 1 });
         } else {
           gsap.set(btn, { scale: 0.1, backgroundColor: "#000" });
-          gsap.set(selector('[data-circle-button-title]'), {opacity: 0});
+          gsap.set(selector("[data-circle-button-title]"), { opacity: 0 });
         }
       });
     },
@@ -51,30 +56,41 @@ function Slider() {
       gsap.to("[data-circle-button]", {
         rotation: `${-rotationValue}_short`,
       });
-      animButton(currentSlide - 1);
+      animButton(currentSlide - 1, true);
     },
     { scope: circleRef, dependencies: [currentSlide] }
   );
 
   const { contextSafe } = useGSAP({ scope: circleRef });
 
-  const animButton = contextSafe((ind: number) => {
-    const buttons: HTMLElement[] = gsap.utils.toArray('[data-circle-button]', circleRef.current);
+  const animButton = contextSafe((ind: number, shouldAnimTitle?: boolean) => {
+    const buttons: HTMLElement[] = gsap.utils.toArray(
+      "[data-circle-button]",
+      circleRef.current
+    );
     buttons.forEach((btn, index) => {
       const selector = gsap.utils.selector(btn);
-     if (index === currentSlide - 1 || index === ind) {
-      gsap.to(btn, { scale: 1, backgroundColor: "#f4f5f9" });
-     } else {
-      gsap.to(btn, { scale: 0.1, backgroundColor: "#000"});
-     }
-     if (index === currentSlide - 1) {
-      gsap.to(selector('[data-circle-button-title]'), {opacity: 1, delay: 0.5});
-     } else {
-      gsap.to(selector('[data-circle-button-title]'), {opacity: 0});
-     }
-
-    })
-
+      const timeline = gsap.timeline();
+      if (index === currentSlide - 1 || index === ind) {
+        timeline.to(btn, { scale: 1, backgroundColor: "#f4f5f9" });
+      } else {
+        timeline.to(btn, { scale: 0.1, backgroundColor: "#000" });
+      }
+      if (!shouldAnimTitle) return;
+      if (index === currentSlide - 1) {
+        timeline.to(
+          selector("[data-circle-button-title]"),
+          { opacity: 1 },
+          ">"
+        );
+      } else {
+        timeline.to(
+          selector("[data-circle-button-title]"),
+          { opacity: 0 },
+          "<"
+        );
+      }
+    });
   });
 
   function getNewSlideValue(index: number) {
@@ -88,7 +104,7 @@ function Slider() {
   }
 
   function padNumber(num: number) {
-    return String(num).padStart(2, '0');
+    return String(num).padStart(2, "0");
   }
 
   return (
@@ -103,7 +119,9 @@ function Slider() {
       />
       <h1 className={styles.title}>Исторические даты</h1>
       <div className={styles.controls}>
-        <p className={styles.controls__slide}>{padNumber(currentSlide)}/{padNumber(historicalData.length)}</p>
+        <p className={styles.controls__slide}>
+          {padNumber(currentSlide)}/{padNumber(historicalData.length)}
+        </p>
         <div className={styles["controls__button-container"]}>
           <ArrowButton
             side={false}
@@ -119,7 +137,7 @@ function Slider() {
           />
         </div>
       </div>
-      <EventsSlider events={historicalData[currentSlide - 1].events}/>
+      <EventsSlider events={historicalData[currentSlide - 1].events} />
     </section>
   );
 }

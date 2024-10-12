@@ -32,7 +32,7 @@ function EventsSlider({ events }: IEventsSlider) {
       />
       <Swiper
         modules={[Navigation]}
-        spaceBetween={80}
+        spaceBetween={20}
         slidesPerView={3}
         navigation={{
           prevEl: buttonLeftRef.current,
@@ -40,7 +40,7 @@ function EventsSlider({ events }: IEventsSlider) {
         }}
       >
         {events.map((event) => (
-          <SwiperSlide>
+          <SwiperSlide >
             <EventCard year={event.year} description={event.description} />
           </SwiperSlide>
         ))}

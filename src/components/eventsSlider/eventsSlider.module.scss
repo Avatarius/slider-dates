@@ -1,20 +1,20 @@
-@import '../../styles/mixins/button.scss';
+@import "../../styles/mixins/button.scss";
 
 .container {
-  margin-block-start: 56px;
   position: relative;
+  margin-block-start: 56px;
+  padding-inline-end: 80px;
   min-block-size: 165px;
-  padding-inline: 80px 160px;
 }
 
 .button {
+  position: absolute;
+  z-index: 12;
+  border: none;
+  box-shadow: 0px 0px 15px 0px #3877ee1a;
   inline-size: 40px;
   block-size: 40px;
-  border: none;
-  box-shadow: 0px 0px 15px 0px #3877EE1A;
-  position: absolute;
   inset-block-end: 84px;
-  z-index: 12;
 }
 
 .button:disabled {

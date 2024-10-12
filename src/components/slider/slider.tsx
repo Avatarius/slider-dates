@@ -11,6 +11,7 @@ function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
+  const eventsSliderRef = useRef<HTMLDivElement | null>(null);
   const deg = -360 / historicalData.length;
 
   useLayoutEffect(() => {
@@ -27,7 +28,6 @@ function Slider() {
         circleRef.current
       );
       gsap.set(circleRef.current, { rotation: rotationValue });
-      console.log("set");
 
       buttons.forEach((btn, index) => {
         const selector = gsap.utils.selector(btn);
@@ -137,7 +137,7 @@ function Slider() {
           />
         </div>
       </div>
-      <EventsSlider events={historicalData[currentSlide - 1].events} />
+      <EventsSlider events={historicalData[currentSlide - 1].events} ref={eventsSliderRef}/>
     </section>
   );
 }

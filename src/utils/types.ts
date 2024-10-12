@@ -1,4 +1,5 @@
 interface IYearsEvents {
+  id: string;
   year: number;
   description: string;
 }

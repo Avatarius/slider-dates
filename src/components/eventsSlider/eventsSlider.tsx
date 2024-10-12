@@ -19,7 +19,7 @@ function EventsSlider({ events }: IEventsSlider) {
   const buttonRightRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <ArrowButton
         side={false}
         additionalClasses={clsx(styles.button, styles.button_left)}
@@ -45,7 +45,7 @@ function EventsSlider({ events }: IEventsSlider) {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 }
 

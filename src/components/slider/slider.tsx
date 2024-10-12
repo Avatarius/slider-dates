@@ -12,6 +12,7 @@ function Slider() {
   const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
   const eventsSliderRef = useRef<HTMLDivElement | null>(null);
+  const eventsSliderOpacityAnim = useRef<GSAPTimeline | null>(null);
   const deg = -360 / historicalData.length;
 
   useLayoutEffect(() => {
@@ -22,6 +23,11 @@ function Slider() {
 
   useGSAP(
     () => {
+      eventsSliderOpacityAnim.current = gsap
+        .timeline({ paused: true })
+        .fromTo(eventsSliderRef.current, { autoAlpha: 1 }, {autoAlpha: 0})
+        .fromTo(eventsSliderRef.current, { autoAlpha: 0 }, {autoAlpha: 1}, '>');
+
       const rotationValue = deg * currentSlide;
       const buttons: HTMLElement[] = gsap.utils.toArray(
         "[data-circle-button]",
@@ -49,6 +55,13 @@ function Slider() {
 
   useGSAP(
     () => {
+      // прозрачность нижнего слайдера
+      // gsap.to(eventsSliderRef.current, {autoAlpha: 0, duration: 3, yoyo: true});
+      // eventsSliderOpacityAnim.current?.play();
+      gsap.fromTo(eventsSliderRef.current, {autoAlpha: 1}, {autoAlpha: 0, duration: 1});
+      gsap.fromTo(eventsSliderRef.current, {autoAlpha: 0}, {autoAlpha: 1, duration: 1});
+
+      // вращение круга
       const rotationValue = currentSlide * deg;
       gsap.to(circleRef.current, {
         rotation: `${rotationValue}_short`,
@@ -56,7 +69,9 @@ function Slider() {
       gsap.to("[data-circle-button]", {
         rotation: `${-rotationValue}_short`,
       });
+      // аним кнопок
       animButton(currentSlide - 1, true);
+
     },
     { scope: circleRef, dependencies: [currentSlide] }
   );
@@ -137,7 +152,10 @@ function Slider() {
           />
         </div>
       </div>
-      <EventsSlider events={historicalData[currentSlide - 1].events} ref={eventsSliderRef}/>
+      <EventsSlider
+        events={historicalData[currentSlide - 1].events}
+        ref={eventsSliderRef}
+      />
     </section>
   );
 }

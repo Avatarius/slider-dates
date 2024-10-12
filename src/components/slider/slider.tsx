@@ -6,12 +6,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { EventsSlider } from "../eventsSlider/eventsSlider";
+import { useFirstRender } from "../../hooks/useFIrstRender";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
   const eventsSliderRef = useRef<HTMLDivElement | null>(null);
+  const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
+  const isFirstRender = useFirstRender();
   const deg = -360 / historicalData.length;
 
   useLayoutEffect(() => {
@@ -22,6 +25,10 @@ function Slider() {
 
   useGSAP(
     () => {
+      eventsSlideTimeline.current = gsap
+        .timeline({ paused: true })
+        .to(eventsSliderRef.current, { autoAlpha: 0, duration: 0.2 }, "<")
+        .to(eventsSliderRef.current, { autoAlpha: 1 }, ">");
       const rotationValue = deg * currentSlide;
       const buttons: HTMLElement[] = gsap.utils.toArray(
         "[data-circle-button]",
@@ -50,8 +57,9 @@ function Slider() {
   useGSAP(
     () => {
       // прозрачность нижнего слайдера
-      gsap.fromTo(eventsSliderRef.current, {autoAlpha: 1}, {autoAlpha: 0, duration: 1});
-      gsap.fromTo(eventsSliderRef.current, {autoAlpha: 0}, {autoAlpha: 1, duration: 1});
+      if (!isFirstRender) {
+        eventsSlideTimeline.current?.restart();
+      }
 
       // вращение круга
       const rotationValue = currentSlide * deg;
@@ -63,7 +71,6 @@ function Slider() {
       });
       // аним кнопок
       animButton(currentSlide - 1, true);
-
     },
     { scope: circleRef, dependencies: [currentSlide] }
   );

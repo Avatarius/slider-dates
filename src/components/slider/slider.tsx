@@ -30,6 +30,9 @@ function Slider() {
         scale: 1,
         backgroundColor: "#f4f5f9",
       });
+      gsap.set('[data-circle-button-title]', {
+        opacity: 0
+      });
     },
     { scope: circleRef }
   );
@@ -53,8 +56,7 @@ function Slider() {
       const active = selector(
         `[data-circle-button]:nth-child(${currentSlide})`
       ) as HTMLElement[];
-      animateButton(notActive, false);
-      animateButton(active, true);
+      animButton(currentSlide - 1);
     },
     { scope: circleRef, dependencies: [currentSlide] }
   );
@@ -68,6 +70,24 @@ function Slider() {
     } else {
       gsap.to(selector, { scale: 0.1, backgroundColor: "#000" });
     }
+  }
+
+  function animButton(ind: number) {
+    const buttons: HTMLElement[] = gsap.utils.toArray('[data-circle-button]', circleRef.current);
+    buttons.forEach((btn, index) => {
+      const selector = gsap.utils.selector(btn);
+      if (index === currentSlide - 1) {
+        gsap.to(btn, { scale: 1, backgroundColor: "#f4f5f9" });
+        gsap.to(selector('[data-circle-button-title]'), {opacity: 1, duration: 1, delay: 0.5});
+      } else if (index === ind) {
+        gsap.to(btn, { scale: 1, backgroundColor: "#f4f5f9"});
+      } else {
+        gsap.to(btn, { scale: 0.1, backgroundColor: "#000" });
+        gsap.to(selector('[data-circle-button-title]'), {opacity: 0, duration: 0.5});
+      }
+
+    })
+
   }
 
   function getNewSlideValue(index: number) {
@@ -91,7 +111,7 @@ function Slider() {
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
         size={circleWidth}
-        animateButton={animateButton}
+        animateButton={animButton}
         ref={circleRef}
       />
       <h1 className={styles.title}>Исторические даты</h1>

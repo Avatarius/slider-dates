@@ -7,7 +7,7 @@ interface ICircleProps {
   data: IHistoricalData[];
   currentSlide: number;
   setCurrentSlide: Dispatch<SetStateAction<number>>;
-  animateButton: (selector: HTMLElement, increase: boolean) => void;
+  animateButton: (ind: number) => void;
   size: number;
 }
 
@@ -32,13 +32,15 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
           if (currentSlide === index + 1) {
             return;
           }
-          animateButton(target as HTMLElement, true);
+          // animateButton(target as HTMLElement, true);
+          animateButton(index);
         }}
         onMouseLeave={({ target }) => {
           if (currentSlide === index + 1) {
             return;
           }
-          animateButton(target as HTMLElement, false);
+          // animateButton(target as HTMLElement, false);
+          animateButton(-1);
         }}
         data-circle-button
       >

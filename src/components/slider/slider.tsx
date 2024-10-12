@@ -22,16 +22,21 @@ function Slider() {
   useGSAP(
     () => {
       const rotationValue = deg * currentSlide;
-
+      const buttons: HTMLElement[] = gsap.utils.toArray('[data-circle-button]', circleRef.current);
       gsap.set(circleRef.current, { rotation: rotationValue });
-      gsap.set("[data-circle-button]", { rotation: -rotationValue });
-      gsap.set("[data-circle-button]", { scale: 0.1, backgroundColor: "#000" });
-      gsap.set(`[data-circle-button]:nth-child(${currentSlide})`, {
-        scale: 1,
-        backgroundColor: "#f4f5f9",
-      });
-      gsap.set('[data-circle-button-title]', {
-        opacity: 0
+      buttons.forEach((btn, index) => {
+        const selector = gsap.utils.selector(btn);
+        gsap.set(btn, { rotation: -rotationValue });
+        if (index === currentSlide - 1) {
+          gsap.set(btn, {
+            scale: 1,
+            backgroundColor: "#f4f5f9",
+          });
+          gsap.set(selector('[data-circle-button-title]'), {opacity: 1});
+        } else {
+          gsap.set(btn, { scale: 0.1, backgroundColor: "#000" });
+          gsap.set(selector('[data-circle-button-title]'), {opacity: 0});
+        }
       });
     },
     { scope: circleRef }
@@ -40,55 +45,37 @@ function Slider() {
   useGSAP(
     () => {
       const rotationValue = currentSlide * deg;
-      const duration = 1;
       gsap.to(circleRef.current, {
         rotation: `${rotationValue}_short`,
-        duration: duration,
       });
       gsap.to("[data-circle-button]", {
         rotation: `${-rotationValue}_short`,
-        duration: duration,
       });
-      const selector = gsap.utils.selector(circleRef.current);
-      const notActive = selector(
-        `[data-circle-button]:not(:nth-child(${currentSlide}))`
-      ) as HTMLElement[];
-      const active = selector(
-        `[data-circle-button]:nth-child(${currentSlide})`
-      ) as HTMLElement[];
       animButton(currentSlide - 1);
     },
     { scope: circleRef, dependencies: [currentSlide] }
   );
 
-  function animateButton(
-    selector: HTMLElement | HTMLElement[],
-    increase: boolean
-  ) {
-    if (increase) {
-      gsap.to(selector, { scale: 1, backgroundColor: "#f4f5f9" });
-    } else {
-      gsap.to(selector, { scale: 0.1, backgroundColor: "#000" });
-    }
-  }
+  const { contextSafe } = useGSAP({ scope: circleRef });
 
-  function animButton(ind: number) {
+  const animButton = contextSafe((ind: number) => {
     const buttons: HTMLElement[] = gsap.utils.toArray('[data-circle-button]', circleRef.current);
     buttons.forEach((btn, index) => {
       const selector = gsap.utils.selector(btn);
-      if (index === currentSlide - 1) {
-        gsap.to(btn, { scale: 1, backgroundColor: "#f4f5f9" });
-        gsap.to(selector('[data-circle-button-title]'), {opacity: 1, duration: 1, delay: 0.5});
-      } else if (index === ind) {
-        gsap.to(btn, { scale: 1, backgroundColor: "#f4f5f9"});
-      } else {
-        gsap.to(btn, { scale: 0.1, backgroundColor: "#000" });
-        gsap.to(selector('[data-circle-button-title]'), {opacity: 0, duration: 0.5});
-      }
+     if (index === currentSlide - 1 || index === ind) {
+      gsap.to(btn, { scale: 1, backgroundColor: "#f4f5f9" });
+     } else {
+      gsap.to(btn, { scale: 0.1, backgroundColor: "#000"});
+     }
+     if (index === currentSlide - 1) {
+      gsap.to(selector('[data-circle-button-title]'), {opacity: 1, delay: 0.5});
+     } else {
+      gsap.to(selector('[data-circle-button-title]'), {opacity: 0});
+     }
 
     })
 
-  }
+  });
 
   function getNewSlideValue(index: number) {
     let result = index;

@@ -1,7 +1,8 @@
 .container {
   // margin-inline: 320px 160px;
   margin-inline: clamp(0rem, calc(-71.429rem + 76.19vw), 20rem) clamp(0rem, calc(-35.714rem + 38.095vw), 10rem);
-  padding: 167px 0 0 80px;
+  // padding: 167px 0 0 80px;
+  padding: clamp(3.688rem, -20.42rem + 25.714vw, 10.438rem) 0 0 clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
   border-inline: 1px solid var(--main-border-color, rgba(66, 86, 122, 0.1));
   position: relative;
   @media screen and (max-width: 1500px) {

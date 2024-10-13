@@ -2,13 +2,16 @@
 
 .container {
   position: absolute;
-  inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
+  // inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
+  inset-inline-end: calc(50%);
+  translate: 50%;
   inset-block-start: 215px;
   display: flex;
   justify-content: center;
   align-items: center;
   inline-size: var(--circle-size, 530px);
-  block-size: var(--circle-size, 530px);
+  aspect-ratio: 1;
+  // block-size: var(--circle-size, 530px);
   @media  screen and (max-width: 570px) {
     inline-size: 100%;
   }

@@ -1,8 +1,4 @@
-import { RefObject, useEffect, useLayoutEffect, useState } from "react";
-
-interface IUseCircleSizeProps {
-  ref: RefObject<HTMLDivElement>;
-}
+import { RefObject, useEffect, useState } from "react";
 
 function useCircleSize(ref: RefObject<HTMLDivElement | null>) {
   const [size, setSize] = useState(0);

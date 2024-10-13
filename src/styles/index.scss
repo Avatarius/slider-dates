@@ -1,7 +1,6 @@
-@import '../fonts/font.scss';
-@import './variables.scss';
-@import './reset.scss';
-
+@import "../fonts/font.scss";
+@import "./variables.scss";
+@import "./reset.scss";
 
 body {
   background-color: var(--main-background-color, #f4f5f9);
@@ -10,6 +9,9 @@ body {
   font-size: 14px;
 }
 
-.swiper-horizontal>#pagination.swiper-pagination-bullets, #pagination.swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+.swiper-horizontal > #pagination.swiper-pagination-bullets,
+#pagination.swiper-pagination-bullets.swiper-pagination-horizontal,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
   width: unset;
 }

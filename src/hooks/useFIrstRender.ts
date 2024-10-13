@@ -12,5 +12,4 @@ function useFirstRender() {
   return isFirstRender.current;
 }
 
-
-export {useFirstRender};
+export { useFirstRender };

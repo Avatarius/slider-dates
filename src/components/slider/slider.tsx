@@ -2,7 +2,7 @@ import { ArrowButton } from "../arrowButton/arrowButton";
 import { Circle } from "../circle/circle";
 import styles from "./slider.module.scss";
 import { historicalData } from "../../utils/constants";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { EventsSlider } from "../eventsSlider/eventsSlider";
@@ -25,7 +25,6 @@ function Slider() {
 
   useGSAP(
     () => {
-      // if (width < 720) return;
       eventsSlideTimeline.current = gsap
         .timeline({ paused: true })
         .to(
@@ -65,8 +64,6 @@ function Slider() {
 
   useGSAP(
     () => {
-      // if (width < 720) return;
-
       // прозрачность нижнего слайдера
       if (!isFirstRender) {
         eventsSlideTimeline.current?.restart();
@@ -206,9 +203,11 @@ function Slider() {
                 }
               />
             </div>
-
           </div>
-          <div className={clsx('pagination', styles.pagination)} id="pagination"></div>
+          <div
+            className={clsx("pagination", styles.pagination)}
+            id="pagination"
+          ></div>
         </div>
       )}
     </section>

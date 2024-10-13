@@ -4,11 +4,11 @@
   position: relative;
   margin-block-start: 56px;
   padding-inline: 80px;
-  // padding-inline-end: clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
   min-block-size: 165px;
   @media screen and (max-width: 720px) {
-    padding-inline: 20px 0;
     margin-block-start: 18px;
+    padding-inline: 20px 0;
+    min-block-size: 180px;
   }
 }
 

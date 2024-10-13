@@ -1,13 +1,10 @@
 .container {
-  // margin-inline: 320px 160px;
-  margin-inline: clamp(0rem, calc(-71.429rem + 76.19vw), 20rem)
-    clamp(0rem, calc(-35.714rem + 38.095vw), 10rem);
-  // padding: 167px 0 0 80px;
-  // padding: clamp(3.688rem, -20.42rem + 25.714vw, 10.438rem) 0 0 clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
-  border: 1px solid var(--main-border-color, rgba(66, 86, 122, 0.1));
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-inline: clamp(0rem, calc(-71.429rem + 76.19vw), 20rem)
+    clamp(0rem, calc(-35.714rem + 38.095vw), 10rem);
+  border: 1px solid var(--main-border-color, rgba(66, 86, 122, 0.1));
   @media screen and (max-width: 1500px) {
     border: none;
   }
@@ -16,8 +13,8 @@
 .container::before,
 .container::after {
   content: "";
-  background-color: rgba(66, 86, 122, 0.1);
   position: absolute;
+  background-color: rgba(66, 86, 122, 0.1);
   @media screen and (max-width: 720px) {
     content: unset;
   }
@@ -38,67 +35,61 @@
 }
 
 .main {
-  // padding: 167px 0 0 80px;
+  position: relative;
   padding: clamp(3.688rem, -20.42rem + 25.714vw, 10.438rem)
     clamp(1.25rem, -12.143rem + 14.286vw, 5rem) 0
     clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
-  position: relative;
 }
 
 .title {
+  margin-block-end: 397px;
   color: #42567a;
   font-size: clamp(1.25rem, 0.8rem + 2.25vw, 3.5rem);
   line-height: 1.2;
-  // max-inline-size: 355px;
   max-inline-size: clamp(7.688rem, 4.787rem + 14.5vw, 22.188rem);
-  margin-block-end: 397px;
   @media screen and (max-width: 720px) {
     margin-block-end: 62px;
   }
 }
 
 .controls {
-  font-weight: 400;
   grid-area: controls;
+  font-weight: 400;
   @media screen and (max-width: 720px) {
-    margin-block-start: 13px;
     margin-inline-start: 20px;
+    margin-block-start: 13px;
   }
   &__button-container {
     display: flex;
     gap: 20px;
     margin-block-start: 23px;
     @media screen and (max-width: 720px) {
-      margin-block-start: 11px;
       gap: 8px;
+      margin-block-start: 11px;
     }
   }
 
   &_mobile {
-    // inline-size: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    justify-content: center;
+    grid-template-areas: "controls pagination .";
     justify-items: center;
+    justify-content: center;
     align-items: center;
-    grid-template-areas: 'controls pagination .';
   }
 }
 
 .details {
   margin-block-start: 34px;
   &__title {
-    // font-size: 32px;
     margin-block-end: 20px;
   }
   &__separator {
     display: block;
-    inline-size: 100%;
-    // height: 1px;
     border-block-end: 1px solid #c7cdd9;
+    inline-size: 100%;
   }
 }
-
 
 .pagination {
   padding-block-start: 13px;

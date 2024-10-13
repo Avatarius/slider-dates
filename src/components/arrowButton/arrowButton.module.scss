@@ -1,9 +1,9 @@
 @import "../../styles/mixins/button.scss";
 
 .button {
-  @include button(50px, rgba(66, 86, 122, 0.5));
-  background-color: transparent;
   background: center / 20% no-repeat url("../../images/arrow.png");
+  background-color: transparent;
+  @include button(50px, rgba(66, 86, 122, 0.5));
   @media screen and (max-width: 720px) {
     inline-size: clamp(1.563rem, 0.313rem + 6.25vw, 3.125rem);
     block-size: clamp(1.563rem, 0.313rem + 6.25vw, 3.125rem);

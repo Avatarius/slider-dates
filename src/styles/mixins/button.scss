@@ -1,13 +1,13 @@
 @mixin button($size, $borderColor) {
   border: 1px solid $borderColor;
   border-radius: 100%;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 20px;
   font-size: 20px;
   background-color: transparent;
   cursor: pointer;
   appearance: none;
   inline-size: $size;
   block-size: $size;
-  font-family: inherit;
-  font-weight: 400;
-  font-size: 20px;
 }

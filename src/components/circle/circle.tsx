@@ -58,7 +58,6 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
     const y = (size / 2) * Math.sin(angle);
     return { x, y };
   }
-  console.log(width);
 
   return (
     <div className={styles.container}>

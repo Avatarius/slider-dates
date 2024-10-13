@@ -15,8 +15,6 @@ function useScreenSize() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log(window.innerWidth);
-
   return screenSize;
 }
 

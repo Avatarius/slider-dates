@@ -1,14 +1,14 @@
 .container {
-  margin-inline-end: 35px;
-  margin-block-end: 25px;
   display: flex;
-  gap: 90px;
   justify-content: space-between;
   align-items: center;
+  gap: 90px;
+  margin-inline-end: 35px;
+  margin-block-end: 25px;
   @media screen and (max-width: 720px) {
+    gap: 37px;
     align-self: center;
     margin-inline-end: 30px;
-    gap: 37px;
   }
 }
 
@@ -16,7 +16,6 @@
   font-size: clamp(3.5rem, 1.7rem + 9vw, 12.5rem);
   letter-spacing: -3px;
 }
-
 
 .text_left {
   color: #5d5fef;

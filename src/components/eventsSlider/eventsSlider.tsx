@@ -9,7 +9,7 @@ import { EventCard } from "../eventCard/eventCard";
 import styles from "./eventsSlider.module.scss";
 import { ArrowButton } from "../arrowButton/arrowButton";
 import clsx from "clsx";
-import { forwardRef, RefObject, useEffect, useRef } from "react";
+import { forwardRef, useRef } from "react";
 
 interface IEventsSlider {
   events: IYearsEvents[];
@@ -19,7 +19,6 @@ const EventsSlider = forwardRef<HTMLDivElement, IEventsSlider>(
   ({ events }, ref) => {
     const buttonLeftRef = useRef<HTMLButtonElement>(null);
     const buttonRightRef = useRef<HTMLButtonElement>(null);
-
 
     return (
       <div className={styles.container} ref={ref}>
@@ -41,15 +40,19 @@ const EventsSlider = forwardRef<HTMLDivElement, IEventsSlider>(
             prevEl: buttonLeftRef.current,
             nextEl: buttonRightRef.current,
           }}
-          pagination={{clickable: true, el: '.pagination', renderBullet: (index, className) => {
-            return `<div class=${className}></div>`
-           },}}
+          pagination={{
+            clickable: true,
+            el: ".pagination",
+            renderBullet: (index, className) => {
+              return `<div class=${className}></div>`;
+            },
+          }}
           breakpoints={{
             720: {
               slidesPerView: 3,
               spaceBetween: 20,
-              pagination: false
-            }
+              pagination: false,
+            },
           }}
         >
           {events.map((event) => {

@@ -2,49 +2,36 @@
 
 .container {
   position: absolute;
-  // inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
-  inset-inline-end: calc(50%);
-  translate: 50%;
-  inset-block-start: 215px;
   display: flex;
   justify-content: center;
   align-items: center;
+  inset-inline-end: calc(50%);
+  translate: 50%;
+  inset-block-start: 215px;
   inline-size: var(--circle-size, 530px);
   aspect-ratio: 1;
-  // block-size: var(--circle-size, 530px);
-  @media screen and (max-width: 720px) {
-    /* position: unset;
-    translate: unset;
-    inset: 0;
-    aspect-ratio: unset;
-    inline-size: unset; */
-  }
-  @media  screen and (max-width: 570px) {
-    // inline-size: 100%;
-  }
 }
 
 .circle {
-  border-radius: 100%;
-  border: 1px solid rgba(66, 86, 122, 0.5);
   position: absolute;
   inset: 0;
+  border: 1px solid rgba(66, 86, 122, 0.5);
+  border-radius: 100%;
   inline-size: 100%;
   block-size: 100%;
 }
 
 .button {
-  @include button(56px, #303e5880);
   position: absolute;
+  background-color: var(--main-background-color, #f4f5f9);
   inset-inline-end: calc(50% - (var(--circle-button-size, 56px) / 2));
   inset-block-end: calc(50% - (var(--circle-button-size, 56px) / 2));
-  background-color: var(--main-background-color, #f4f5f9);
+  @include button(56px, #303e5880);
 }
-
 
 .button__title {
   position: absolute;
+  font-weight: 700;
   inset-inline-start: 75px;
   inset-block-start: calc(50% - 16px);
-  font-weight: 700;
 }

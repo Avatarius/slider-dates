@@ -2,6 +2,7 @@ import { Dispatch, forwardRef, SetStateAction } from "react";
 import { IHistoricalData } from "../../utils/types";
 import styles from "./circle.module.scss";
 import { AnimatedYear } from "../animatedYear/animatedYear";
+import { useScreenSize } from "../../hooks/useScrennSize";
 
 interface ICircleProps {
   data: IHistoricalData[];
@@ -12,6 +13,7 @@ interface ICircleProps {
 }
 
 const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
+  const { width } = useScreenSize();
   const { data, currentSlide, setCurrentSlide, size, animateButton } = props;
   const dataArray: IHistoricalData[] =
     data.length >= 6 ? data.slice(0, 6) : data;
@@ -34,15 +36,17 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
         style={{ translate: `${x}px ${y}px` }}
         onClick={() => handleClick(index)}
         onMouseEnter={() => {
-          handleHover(index)
+          handleHover(index);
         }}
         onMouseLeave={() => {
-          handleHover(-1)
+          handleHover(-1);
         }}
         data-circle-button
       >
         {index + 1}
-        <h2 className={styles.button__title} data-circle-button-title>{data[index].title}</h2>
+        <h2 className={styles.button__title} data-circle-button-title>
+          {data[index].title}
+        </h2>
       </button>
     );
   });
@@ -57,10 +61,15 @@ const Circle = forwardRef<HTMLDivElement, ICircleProps>((props, ref) => {
 
   return (
     <div className={styles.container}>
-      <AnimatedYear startYear={data[currentSlide - 1].startYear} endYear={data[currentSlide - 1].endYear}/>
-      <div className={styles.circle} ref={ref}>
-        {buttonsArray}
-      </div>
+      <AnimatedYear
+        startYear={data[currentSlide - 1].startYear}
+        endYear={data[currentSlide - 1].endYear}
+      />
+      {width > 720 && (
+        <div className={styles.circle} ref={ref}>
+          {buttonsArray}
+        </div>
+      )}
     </div>
   );
 });

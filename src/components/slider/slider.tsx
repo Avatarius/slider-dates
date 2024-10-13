@@ -11,18 +11,18 @@ import { useScreenSize } from "../../hooks/useScrennSize";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
-  const [circleWidth, setCircleWidth] = useState(0);
+  // const [circleWidth, setCircleWidth] = useState(0);
+  const circleWidth = 530;
   const circleRef = useRef<HTMLDivElement>(null);
   const eventsSliderRef = useRef<HTMLDivElement | null>(null);
   const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
   const isFirstRender = useFirstRender();
   const deg = -360 / historicalData.length;
-  const screenSize = useScreenSize();
-  console.log(screenSize);
+
 
   useLayoutEffect(() => {
     if (circleRef.current) {
-      setCircleWidth(circleRef.current.getBoundingClientRect().width);
+      // setCircleWidth(circleRef.current.getBoundingClientRect().width);
     }
   }, []);
 
@@ -126,14 +126,14 @@ function Slider() {
 
   return (
     <section className={styles.container}>
-      {screenSize.width > 720 && <Circle
+      <Circle
         data={historicalData}
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
         size={circleWidth}
         animateButton={animButton}
         ref={circleRef}
-      />}
+      />
 
       <h1 className={styles.title}>Исторические даты</h1>
       <div className={styles.controls}>

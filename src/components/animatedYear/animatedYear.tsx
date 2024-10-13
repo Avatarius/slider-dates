@@ -3,6 +3,7 @@ import styles from "./animatedYear.module.scss";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useEffect, useRef, useState } from "react";
+import { useFirstRender } from "../../hooks/useFIrstRender";
 
 interface IAnimatedYearProps {
   startYear: number;
@@ -13,10 +14,18 @@ function AnimatedYear({ startYear, endYear }: IAnimatedYearProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const previousStartYearRef = useRef<number | null>(null);
   const previousEndYearRef = useRef<number | null>(null);
+  const isFirstRender = useFirstRender();
   useEffect(() => {
     previousStartYearRef.current = startYear;
     previousEndYearRef.current = endYear;
   }, [startYear, endYear]);
+
+
+  useGSAP(() => {
+    gsap.set("[data-text-left]", {innerText: startYear});
+    gsap.set("[data-text-right]", {innerText: endYear});
+  }, {scope: containerRef})
+
   useGSAP(
     () => {
       gsap.to("[data-text-left]", {

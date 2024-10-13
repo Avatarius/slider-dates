@@ -4,13 +4,21 @@
   position: absolute;
   inset-inline-start: calc(50% - (var(--circle-size, 530px) / 2));
   inset-block-start: 215px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: var(--circle-size, 530px);
+  block-size: var(--circle-size, 530px);
+  @media  screen and (max-width: 570px) {
+    inline-size: 100%;
+  }
 }
 
 .circle {
-  inline-size: var(--circle-size, 530px);
-  block-size: var(--circle-size, 530px);
   border-radius: 100%;
   border: 1px solid rgba(66, 86, 122, 0.5);
+  position: absolute;
+  inset: 0;
 }
 
 .button {

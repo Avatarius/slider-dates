@@ -13,10 +13,10 @@ import { AnimatedYear } from "../animatedYear/animatedYear";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
-  // const [circleWidth, setCircleWidth] = useState(0);
   const circleRef = useRef<HTMLDivElement>(null);
-  const circleWidth = useCircleSize(circleRef);
   const eventsSliderRef = useRef<HTMLDivElement | null>(null);
+  const mobileTitleRef = useRef<HTMLDivElement | null>(null);
+  const circleWidth = useCircleSize(circleRef);
   const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
   const isFirstRender = useFirstRender();
   const deg = -360 / historicalData.length;
@@ -27,8 +27,16 @@ function Slider() {
       // if (width < 720) return;
       eventsSlideTimeline.current = gsap
         .timeline({ paused: true })
-        .to(eventsSliderRef.current, { autoAlpha: 0, duration: 0.2 }, "<")
-        .to(eventsSliderRef.current, { autoAlpha: 1 }, ">");
+        .to(
+          [eventsSliderRef.current, mobileTitleRef.current],
+          { autoAlpha: 0, duration: 0.2 },
+          "<"
+        )
+        .to(
+          [eventsSliderRef.current, mobileTitleRef.current],
+          { autoAlpha: 1 },
+          ">"
+        );
       const rotationValue = deg * currentSlide;
       const buttons: HTMLElement[] = gsap.utils.toArray(
         "[data-circle-button]",
@@ -143,13 +151,41 @@ function Slider() {
               endYear={historicalData[currentSlide - 1].endYear}
             />
             <div className={styles.details}>
-              <h2 className={styles.details__title}>{historicalData[currentSlide - 1].title}</h2>
+              <h2 className={styles.details__title} ref={mobileTitleRef}>
+                {historicalData[currentSlide - 1].title}
+              </h2>
               <span className={styles.details__separator} />
             </div>
           </>
         )}
+        {width > 720 && (
+          <div className={styles.controls}>
+            <p className={styles.controls__slide}>
+              {padNumber(currentSlide)}/{padNumber(historicalData.length)}
+            </p>
+            <div className={styles["controls__button-container"]}>
+              <ArrowButton
+                side={false}
+                onClick={() =>
+                  setCurrentSlide((prev) => getNewSlideValue(prev - 1))
+                }
+              />
+              <ArrowButton
+                side={true}
+                onClick={() =>
+                  setCurrentSlide((prev) => getNewSlideValue(prev + 1))
+                }
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
-        <div className={styles.controls}>
+      <EventsSlider
+        events={historicalData[currentSlide - 1].events}
+        ref={eventsSliderRef}
+      />
+      {width < 720 && <div className={styles.controls}>
           <p className={styles.controls__slide}>
             {padNumber(currentSlide)}/{padNumber(historicalData.length)}
           </p>
@@ -167,13 +203,7 @@ function Slider() {
               }
             />
           </div>
-        </div>
-      </div>
-
-      <EventsSlider
-        events={historicalData[currentSlide - 1].events}
-        ref={eventsSliderRef}
-      />
+        </div>}
     </section>
   );
 }

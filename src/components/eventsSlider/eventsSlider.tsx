@@ -1,8 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 
 import "swiper/scss";
 import "swiper/scss/navigation";
+import "swiper/scss/pagination";
 import { IYearsEvents } from "../../utils/types";
 import { EventCard } from "../eventCard/eventCard";
 import styles from "./eventsSlider.module.scss";
@@ -20,7 +21,7 @@ const EventsSlider = forwardRef<HTMLDivElement, IEventsSlider>(
     const buttonRightRef = useRef<HTMLButtonElement>(null);
 
     return (
-      <section className={styles.container} ref={ref}>
+      <div className={styles.container} ref={ref}>
         <ArrowButton
           side={false}
           additionalClasses={clsx(styles.button, styles.button_left)}
@@ -32,12 +33,20 @@ const EventsSlider = forwardRef<HTMLDivElement, IEventsSlider>(
           ref={buttonRightRef}
         />
         <Swiper
-          modules={[Navigation]}
+          modules={[Navigation, Pagination]}
           spaceBetween={20}
-          slidesPerView={3}
+          slidesPerView={2}
           navigation={{
             prevEl: buttonLeftRef.current,
             nextEl: buttonRightRef.current,
+          }}
+          pagination={{clickable: true}}
+          breakpoints={{
+            720: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+              pagination: false
+            }
           }}
         >
           {events.map((event) => {
@@ -49,7 +58,7 @@ const EventsSlider = forwardRef<HTMLDivElement, IEventsSlider>(
             );
           })}
         </Swiper>
-      </section>
+      </div>
     );
   }
 );

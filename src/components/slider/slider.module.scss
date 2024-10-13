@@ -59,10 +59,19 @@
 
 .controls {
   font-weight: 400;
+  @media screen and (max-width: 720px) {
+    margin-block-start: 13px;
+    margin-inline-start: 20px;
+  }
   &__button-container {
     display: flex;
     gap: 20px;
     margin-block-start: 23px;
+    @media screen and (max-width: 720px) {
+      margin-block-start: 11px;
+      gap: 8px;
+    }
+
   }
 }
 

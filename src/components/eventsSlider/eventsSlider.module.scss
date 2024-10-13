@@ -6,6 +6,10 @@
   padding-inline: 80px;
   // padding-inline-end: clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
   min-block-size: 165px;
+  @media screen and (max-width: 720px) {
+    padding-inline: 20px 0;
+    margin-block-start: 18px;
+  }
 }
 
 .button {
@@ -16,6 +20,9 @@
   inline-size: 40px;
   block-size: 40px;
   inset-block-end: 84px;
+  @media screen and (max-width: 720px) {
+    display: none;
+  }
 }
 
 .button:disabled {

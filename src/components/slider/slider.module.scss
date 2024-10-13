@@ -59,6 +59,7 @@
 
 .controls {
   font-weight: 400;
+  grid-area: controls;
   @media screen and (max-width: 720px) {
     margin-block-start: 13px;
     margin-inline-start: 20px;
@@ -71,7 +72,16 @@
       margin-block-start: 11px;
       gap: 8px;
     }
+  }
 
+  &_mobile {
+    // inline-size: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-areas: 'controls pagination .';
   }
 }
 
@@ -87,4 +97,9 @@
     // height: 1px;
     border-block-end: 1px solid #c7cdd9;
   }
+}
+
+
+.pagination {
+  padding-block-start: 13px;
 }

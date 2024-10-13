@@ -10,6 +10,7 @@ import { useFirstRender } from "../../hooks/useFIrstRender";
 import { useScreenSize } from "../../hooks/useScrennSize";
 import { useCircleSize } from "../../hooks/useCircleSIze";
 import { AnimatedYear } from "../animatedYear/animatedYear";
+import clsx from "clsx";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -185,25 +186,31 @@ function Slider() {
         events={historicalData[currentSlide - 1].events}
         ref={eventsSliderRef}
       />
-      {width < 720 && <div className={styles.controls}>
-          <p className={styles.controls__slide}>
-            {padNumber(currentSlide)}/{padNumber(historicalData.length)}
-          </p>
-          <div className={styles["controls__button-container"]}>
-            <ArrowButton
-              side={false}
-              onClick={() =>
-                setCurrentSlide((prev) => getNewSlideValue(prev - 1))
-              }
-            />
-            <ArrowButton
-              side={true}
-              onClick={() =>
-                setCurrentSlide((prev) => getNewSlideValue(prev + 1))
-              }
-            />
+      {width < 720 && (
+        <div className={styles.controls_mobile}>
+          <div className={styles.controls}>
+            <p className={styles.controls__slide}>
+              {padNumber(currentSlide)}/{padNumber(historicalData.length)}
+            </p>
+            <div className={styles["controls__button-container"]}>
+              <ArrowButton
+                side={false}
+                onClick={() =>
+                  setCurrentSlide((prev) => getNewSlideValue(prev - 1))
+                }
+              />
+              <ArrowButton
+                side={true}
+                onClick={() =>
+                  setCurrentSlide((prev) => getNewSlideValue(prev + 1))
+                }
+              />
+            </div>
+
           </div>
-        </div>}
+          <div className={clsx('pagination', styles.pagination)} id="pagination"></div>
+        </div>
+      )}
     </section>
   );
 }

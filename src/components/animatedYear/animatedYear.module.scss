@@ -5,6 +5,11 @@
   gap: 90px;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 720px) {
+    align-self: center;
+    margin-inline-end: 30px;
+    gap: 37px;
+  }
 }
 
 .text {

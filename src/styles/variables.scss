@@ -4,5 +4,6 @@
   --main-font-family: "PTSans-Bold";
   --second-font-family: "BebasNeue-Regular";
   --circle-size: 530px;
+  --circle-size: clamp(25.625rem, 21.125rem + 10vw, 33.125rem);
   --circle-button-size: 56px;
 }

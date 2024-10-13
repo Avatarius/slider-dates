@@ -8,26 +8,24 @@ import { useGSAP } from "@gsap/react";
 import { EventsSlider } from "../eventsSlider/eventsSlider";
 import { useFirstRender } from "../../hooks/useFIrstRender";
 import { useScreenSize } from "../../hooks/useScrennSize";
+import { useCircleSize } from "../../hooks/useCircleSIze";
+import { AnimatedYear } from "../animatedYear/animatedYear";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
   // const [circleWidth, setCircleWidth] = useState(0);
-  const circleWidth = 530;
   const circleRef = useRef<HTMLDivElement>(null);
+  const circleWidth = useCircleSize(circleRef);
   const eventsSliderRef = useRef<HTMLDivElement | null>(null);
   const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
   const isFirstRender = useFirstRender();
   const deg = -360 / historicalData.length;
+  const { width } = useScreenSize();
 
-
-  useLayoutEffect(() => {
-    if (circleRef.current) {
-      // setCircleWidth(circleRef.current.getBoundingClientRect().width);
-    }
-  }, []);
 
   useGSAP(
     () => {
+      // if (width < 720) return;
       eventsSlideTimeline.current = gsap
         .timeline({ paused: true })
         .to(eventsSliderRef.current, { autoAlpha: 0, duration: 0.2 }, "<")
@@ -59,6 +57,8 @@ function Slider() {
 
   useGSAP(
     () => {
+      // if (width < 720) return;
+
       // прозрачность нижнего слайдера
       if (!isFirstRender) {
         eventsSlideTimeline.current?.restart();
@@ -126,16 +126,16 @@ function Slider() {
 
   return (
     <section className={styles.container}>
-      <Circle
+      <h1 className={styles.title}>Исторические даты</h1>
+      {width > 720 ? <Circle
         data={historicalData}
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
         size={circleWidth}
         animateButton={animButton}
         ref={circleRef}
-      />
+      /> : <AnimatedYear startYear={historicalData[currentSlide - 1].startYear} endYear={historicalData[currentSlide - 1].endYear}/>}
 
-      <h1 className={styles.title}>Исторические даты</h1>
       <div className={styles.controls}>
         <p className={styles.controls__slide}>
           {padNumber(currentSlide)}/{padNumber(historicalData.length)}

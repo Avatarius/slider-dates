@@ -12,8 +12,15 @@
   inline-size: var(--circle-size, 530px);
   aspect-ratio: 1;
   // block-size: var(--circle-size, 530px);
+  @media screen and (max-width: 720px) {
+    /* position: unset;
+    translate: unset;
+    inset: 0;
+    aspect-ratio: unset;
+    inline-size: unset; */
+  }
   @media  screen and (max-width: 570px) {
-    inline-size: 100%;
+    // inline-size: 100%;
   }
 }
 
@@ -22,6 +29,8 @@
   border: 1px solid rgba(66, 86, 122, 0.5);
   position: absolute;
   inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .button {

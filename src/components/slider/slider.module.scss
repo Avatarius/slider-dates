@@ -5,6 +5,8 @@
   padding: clamp(3.688rem, -20.42rem + 25.714vw, 10.438rem) 0 0 clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
   border-inline: 1px solid var(--main-border-color, rgba(66, 86, 122, 0.1));
   position: relative;
+  display: flex;
+  flex-direction: column;
   @media screen and (max-width: 1500px) {
     border: none;
   }
@@ -42,6 +44,9 @@
   // max-inline-size: 355px;
   max-inline-size: clamp(7.688rem, 4.787rem + 14.5vw, 22.188rem);
   margin-block-end: 397px;
+  @media screen and (max-width: 720px) {
+    margin-block-end: 62px;
+  }
 }
 
 

@@ -9,17 +9,15 @@
 }
 
 .text {
-  font-size: 200px;
+  font-size: clamp(3.5rem, 1.7rem + 9vw, 12.5rem);
   letter-spacing: -3px;
 }
 
 
 .text_left {
-  // inset-inline-end: 328px;
   color: #5d5fef;
 }
 
 .text_right {
-  // inset-inline-start: 292px;
   color: #ef5da8;
 }

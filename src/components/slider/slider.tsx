@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { EventsSlider } from "../eventsSlider/eventsSlider";
 import { useFirstRender } from "../../hooks/useFIrstRender";
+import { useScreenSize } from "../../hooks/useScrennSize";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
@@ -16,6 +17,8 @@ function Slider() {
   const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
   const isFirstRender = useFirstRender();
   const deg = -360 / historicalData.length;
+  const screenSize = useScreenSize();
+  console.log(screenSize);
 
   useLayoutEffect(() => {
     if (circleRef.current) {
@@ -123,14 +126,15 @@ function Slider() {
 
   return (
     <section className={styles.container}>
-      <Circle
+      {screenSize.width > 720 && <Circle
         data={historicalData}
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
         size={circleWidth}
         animateButton={animButton}
         ref={circleRef}
-      />
+      />}
+
       <h1 className={styles.title}>Исторические даты</h1>
       <div className={styles.controls}>
         <p className={styles.controls__slide}>

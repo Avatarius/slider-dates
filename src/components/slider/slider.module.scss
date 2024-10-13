@@ -1,14 +1,21 @@
 .container {
-  margin-inline: 320px 160px;
+  // margin-inline: 320px 160px;
+  margin-inline: clamp(0rem, calc(-71.429rem + 76.19vw), 20rem) clamp(0rem, calc(-35.714rem + 38.095vw), 10rem);
   padding: 167px 0 0 80px;
   border-inline: 1px solid var(--main-border-color, rgba(66, 86, 122, 0.1));
   position: relative;
+  @media screen and (max-width: 1500px) {
+    border: none;
+  }
 }
 
 .container::before, .container::after {
   content: '';
   background-color: rgba(66, 86, 122, 0.1);
   position: absolute;
+  @media screen and (max-width: 720px) {
+    content: unset;
+  }
 }
 
 .container::before {
@@ -29,7 +36,7 @@
 
 .title {
   color: #42567a;
-  font-size: 56px;
+  font-size: clamp(1.25rem, 0.8rem + 2.25vw, 3.5rem);
   line-height: 67.2px;
   max-inline-size: 355px;
   margin-block-end: 397px;

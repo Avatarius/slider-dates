@@ -1,7 +1,6 @@
 import { ArrowButton } from "../arrowButton/arrowButton";
 import { Circle } from "../circle/circle";
 import styles from "./slider.module.scss";
-import { historicalData } from "../../utils/constants";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -11,8 +10,13 @@ import { useScreenSize } from "../../hooks/useScrennSize";
 import { useCircleSize } from "../../hooks/useCircleSIze";
 import { AnimatedYear } from "../animatedYear/animatedYear";
 import clsx from "clsx";
+import { IHistoricalData } from "../../utils/types";
 
-function Slider() {
+interface ISliderProps {
+  data: IHistoricalData[];
+}
+
+function Slider({data} : ISliderProps) {
   const [currentSlide, setCurrentSlide] = useState(1);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const circleRef = useRef<HTMLDivElement>(null);
@@ -21,9 +25,9 @@ function Slider() {
   const circleWidth = useCircleSize(circleRef);
   const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
   const isFirstRender = useFirstRender();
-  const deg = -360 / historicalData.length;
-  const rotationValue = (-360 / historicalData.length) * currentSlide;
   const { width } = useScreenSize();
+  const {length} = data;
+  const rotationValue = (-360 / length) * currentSlide;
 
   useGSAP(
     () => {
@@ -109,10 +113,10 @@ function Slider() {
 
   function getNewSlideValue(index: number) {
     let result = index;
-    if (index > historicalData.length) {
+    if (index > length) {
       result = 1;
     } else if (index <= 0) {
-      result = historicalData.length;
+      result = length;
     }
     return result;
   }
@@ -127,7 +131,7 @@ function Slider() {
         <h1 className={styles.title}>Исторические даты</h1>
         {width > 720 ? (
           <Circle
-            data={historicalData}
+            data={data}
             currentSlide={currentSlide}
             setCurrentSlide={setCurrentSlide}
             size={circleWidth}
@@ -137,12 +141,12 @@ function Slider() {
         ) : (
           <>
             <AnimatedYear
-              startYear={historicalData[currentSlide - 1].startYear}
-              endYear={historicalData[currentSlide - 1].endYear}
+              startYear={data[currentSlide - 1].startYear}
+              endYear={data[currentSlide - 1].endYear}
             />
             <div className={styles.details}>
               <h2 className={styles.details__title} ref={mobileTitleRef}>
-                {historicalData[currentSlide - 1].title}
+                {data[currentSlide - 1].title}
               </h2>
               <span className={styles.details__separator} />
             </div>
@@ -151,7 +155,7 @@ function Slider() {
         {width > 720 && (
           <div className={styles.controls}>
             <p className={styles.controls__slide}>
-              {padNumber(currentSlide)}/{padNumber(historicalData.length)}
+              {padNumber(currentSlide)}/{padNumber(length)}
             </p>
             <div className={styles["controls__button-container"]}>
               <ArrowButton
@@ -172,14 +176,14 @@ function Slider() {
       </div>
 
       <EventsSlider
-        events={historicalData[currentSlide - 1].events}
+        events={data[currentSlide - 1].events}
         ref={eventsSliderRef}
       />
       {width < 720 && (
         <div className={styles.controls_mobile}>
           <div className={styles.controls}>
             <p className={styles.controls__slide}>
-              {padNumber(currentSlide)}/{padNumber(historicalData.length)}
+              {padNumber(currentSlide)}/{padNumber(length)}
             </p>
             <div className={styles["controls__button-container"]}>
               <ArrowButton

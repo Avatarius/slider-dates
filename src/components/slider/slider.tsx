@@ -22,6 +22,7 @@ function Slider() {
   const eventsSlideTimeline = useRef<GSAPTimeline | null>(null);
   const isFirstRender = useFirstRender();
   const deg = -360 / historicalData.length;
+  const rotationValue = (-360 / historicalData.length) * currentSlide;
   const { width } = useScreenSize();
 
   useGSAP(
@@ -30,7 +31,6 @@ function Slider() {
         const target = (width > 720) ? [eventsSliderRef.current] : [eventsSliderRef.current, mobileTitleRef.current];
         eventsSlideTimeline.current?.to(target, {autoAlpha:0, duration: 0.2}, '<').to(target, {autoAlpha: 1}, '>');
         if (width < 720) return;
-      const rotationValue = deg * currentSlide;
       const buttons: HTMLElement[] = gsap.utils.toArray(
         "[data-circle-button]",
         circleRef.current
@@ -63,7 +63,6 @@ function Slider() {
       }
       if (width < 720) return;
       // вращение круга
-      const rotationValue = currentSlide * deg;
       gsap.to(circleRef.current, {
         rotation: `${rotationValue}_short`,
       });

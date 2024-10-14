@@ -14,6 +14,7 @@ import clsx from "clsx";
 
 function Slider() {
   const [currentSlide, setCurrentSlide] = useState(1);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const eventsSliderRef = useRef<HTMLDivElement | null>(null);
   const mobileTitleRef = useRef<HTMLDivElement | null>(null);
@@ -25,18 +26,10 @@ function Slider() {
 
   useGSAP(
     () => {
-      eventsSlideTimeline.current = gsap
-        .timeline({ paused: true })
-        .to(
-          [eventsSliderRef.current, mobileTitleRef.current],
-          { autoAlpha: 0, duration: 0.2 },
-          "<"
-        )
-        .to(
-          [eventsSliderRef.current, mobileTitleRef.current],
-          { autoAlpha: 1 },
-          ">"
-        );
+        eventsSlideTimeline.current = gsap.timeline({paused: true});
+        const target = (width > 720) ? [eventsSliderRef.current] : [eventsSliderRef.current, mobileTitleRef.current];
+        eventsSlideTimeline.current?.to(target, {autoAlpha:0, duration: 0.2}, '<').to(target, {autoAlpha: 1}, '>');
+        if (width < 720) return;
       const rotationValue = deg * currentSlide;
       const buttons: HTMLElement[] = gsap.utils.toArray(
         "[data-circle-button]",
@@ -59,7 +52,7 @@ function Slider() {
         }
       });
     },
-    { scope: circleRef }
+    { scope: (width > 720) ? circleRef : sectionRef }
   );
 
   useGSAP(
@@ -68,7 +61,7 @@ function Slider() {
       if (!isFirstRender) {
         eventsSlideTimeline.current?.restart();
       }
-
+      if (width < 720) return;
       // вращение круга
       const rotationValue = currentSlide * deg;
       gsap.to(circleRef.current, {
@@ -130,7 +123,7 @@ function Slider() {
   }
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} ref={sectionRef}>
       <div className={styles.main}>
         <h1 className={styles.title}>Исторические даты</h1>
         {width > 720 ? (

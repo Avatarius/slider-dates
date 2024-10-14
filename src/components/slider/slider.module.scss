@@ -37,12 +37,13 @@
 .main {
   position: relative;
   padding: clamp(3.688rem, -20.42rem + 25.714vw, 10.438rem)
-    clamp(1.25rem, -12.143rem + 14.286vw, 5rem) 0
-    clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
+    clamp(1.25rem, -12.143rem + 14.286vw, 5rem) 0 0;
 }
 
 .title {
+  position: relative;
   margin-block-end: 397px;
+  padding-inline-start: clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
   color: #42567a;
   font-size: clamp(1.25rem, 0.8rem + 2.25vw, 3.5rem);
   line-height: 1.2;
@@ -52,11 +53,25 @@
   }
 }
 
+.title::before {
+  content: "";
+  position: absolute;
+  background: linear-gradient(180deg, #3877ee -5%, #ef5da8 85%);
+  background-color: red;
+  inline-size: 5px;
+  block-size: 120px;
+  inset-inline-start: -2px;
+  inset-block-end: calc(100% - 133px);
+  @media screen and (max-width: 1500px) {
+    content: unset;
+  }
+}
+
 .controls {
   grid-area: controls;
+  padding-inline-start: clamp(1.25rem, -12.143rem + 14.286vw, 5rem);
   font-weight: 400;
   @media screen and (max-width: 720px) {
-    margin-inline-start: 20px;
     margin-block-start: 13px;
   }
   &__button-container {
@@ -81,6 +96,7 @@
 
 .details {
   margin-block-start: 34px;
+  padding-inline: 20px;
   &__title {
     margin-block-end: 20px;
   }
